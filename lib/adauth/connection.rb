@@ -29,9 +29,9 @@ module Adauth
 
             begin
                 Timeout::timeout(10){
-                  pp conn
+                  pp conn.to_h
                   conn.bind
-                  pp conn
+                  pp conn.to_h
                   return conn
                     #if conn.bind
                     #    return conn
