@@ -4,12 +4,12 @@ module Adauth
     # Handles errors and configures the connection.
     class Connection
         include Expects
-      
+
         def initialize(config)
             expects config, Hash
             @config = config
         end
-        
+
         # Attempts to bind to Active Directory
         #
         # If it works it returns the connection
@@ -22,18 +22,22 @@ module Adauth
             if @config[:encryption]
                conn.encryption @config[:encryption]
             end
-            
+
             raise "Anonymous Bind is disabled" if @config[:password] == "" && !(@config[:anonymous_bind])
-            
+
             conn.auth "#{@config[:username]}@#{@config[:domain]}", @config[:password]
-            
+
             begin
                 Timeout::timeout(10){
-                    if conn.bind
-                        return conn
-                    else
-                        raise 'Query User Rejected'
-                    end
+                  pp conn
+                  conn.bind
+                  pp conn
+                  return conn
+                    #if conn.bind
+                    #    return conn
+                    #else
+                    #    raise 'Query User Rejected'
+                    #end
                 }
             rescue Timeout::Error
                 raise 'Unable to connect to LDAP Server'
