@@ -29,7 +29,7 @@ module Adauth
 
             begin
                 Timeout::timeout(10){
-                  pp conn.server
+                  pp conn.host
                   pp conn.port
                   pp conn.base
                   conn.bind
