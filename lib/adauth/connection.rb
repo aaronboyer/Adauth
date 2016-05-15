@@ -25,7 +25,8 @@ module Adauth
 
             raise "Anonymous Bind is disabled" if @config[:password] == "" && !(@config[:anonymous_bind])
 
-            conn.auth("svc-thing", "Passw0rd")
+            conn.auth(@config[:username], @config[:password])
+            pp @config
             #conn.auth "#{@config[:username]}@#{@config[:domain]}", @config[:password]
 
             begin
